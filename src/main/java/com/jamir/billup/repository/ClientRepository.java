@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.jamir.billup.model.Client;
 
 public interface ClientRepository extends JpaRepository<Client, Long>{
-	public List<Client> findByUserId(Long userId);
+	public List<Client> findAllByUserId(Long userId);
 }

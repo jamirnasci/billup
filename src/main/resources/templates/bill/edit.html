@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Cobrança - BillUp</title>
+    <th:block th:replace="~{fragments/libs :: libs}"></th:block>
+</head>
+<body class="bg-light">
+<div th:replace="~{fragments/nav :: nav}"></div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Editar Fatura #<span th:text="${bill.id}"></span></h4>
+                </div>
+                <div class="card-body">
+                    
+                    <form th:action="@{/bill/update}" th:object="${bill}" method="POST">
+                        
+                        <input type="hidden" th:field="*{id}" />
+
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label fw-bold">Cliente</label>
+                                <input type="text" class="form-control bg-light" th:value="${bill.client.nome}" readonly>
+                                <input type="hidden" th:field="*{client}">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="totalBill" class="form-label fw-bold">Valor (R$)</label>
+                                <input type="number" step="0.01" class="form-control" id="totalBill" th:field="*{totalBill}" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="dueDate" class="form-label fw-bold">Vencimento</label>
+                                <input type="date" class="form-control" id="dueDate" th:field="*{dueDate}" required>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label for="status" class="form-label fw-bold">Status do Pagamento</label>
+                                <select class="form-select" id="status" th:field="*{status}">
+                                    <option value="PENDING">Pendente</option>
+                                    <option value="PAID">Pago</option>
+                                    <option value="OVERDUE">Vencido</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label for="description" class="form-label fw-bold">Descrição</label>
+                                <textarea class="form-control" id="description" th:field="*{description}" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between border-top pt-3">
+                            <a href="/bills" class="btn btn-secondary">Voltar</a>
+                            <button type="submit" class="btn btn-success px-4">Salvar Alterações</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

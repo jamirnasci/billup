@@ -1,6 +1,59 @@
-<html>
-	<head>
-		<title>Bills List</title>
-	</head>	
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Minhas Cobranças - BillUp</title>
+    <th:block th:replace="~{fragments/libs :: libs}"></th:block>
+</head>
+<body class="bg-light">
+<div th:replace="~{fragments/nav :: nav}"></div>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Minhas Cobranças</h2>
+        <a href="/bill/create" class="btn btn-success">
+            <i class="bi bi-plus-lg"></i> Nova Bill
+        </a>
+    </div>
 
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Vencimento</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="bill : ${bills}">
+                        <td th:text="${bill.client.nome}" class="fw-bold">Nome do Cliente</td>
+                        <td th:text="${#temporals.format(bill.dueDate, 'dd/MM/yyyy')}">01/01/2024</td>
+                        <td th:text="${'R$ ' + #numbers.formatDecimal(bill.totalBill, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                        <td>
+                            <span th:if="${bill.status.name() == 'PENDING'}" class="badge bg-warning text-dark">Pendente</span>
+                            <span th:if="${bill.status.name() == 'PAID'}" class="badge bg-success">Pago</span>
+                            <span th:if="${bill.status.name() == 'OVERDUE'}" class="badge bg-danger">Vencido</span>
+                        </td>
+                        <td class="text-center">
+                            <a th:href="@{/bill/edit/{id}(id=${bill.id})}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil-square"></i> Abrir
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr th:if="${#lists.isEmpty(bills)}">
+                        <td colspan="5" class="text-center py-4 text-muted">
+                            Nenhuma cobrança encontrada.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
 </html>

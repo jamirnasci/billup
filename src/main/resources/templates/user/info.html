@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Meu Perfil - BillUp</title>
+    <th:block th:replace="~{fragments/libs :: libs}"></th:block>
+</head>
+<body class="bg-light">
+
+    <div th:replace="~{fragments/nav :: nav}"></div>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-dark text-white p-3">
+                        <h5 class="mb-0"><i class="bi bi-person-circle me-2"></i>Editar Meu Perfil</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <form th:action="@{/user/update}" th:object="${user}" method="post">
+                            
+                            <input type="hidden" th:field="*{id}" />
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Nome</label>
+                                <input type="text" th:field="*{nome}" class="form-control" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">E-mail</label>
+                                <input type="email" th:field="*{email}" class="form-control bg-light" readonly />
+                                <div class="form-text">O e-mail não pode ser alterado por segurança.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Telefone</label>
+                                <input type="text" th:field="*{telefone}" class="form-control" required />
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold text-danger">Nova Senha</label>
+                                <input type="password" name="newPassword" class="form-control" placeholder="Deixe em branco para manter a atual" />
+                                <label class="form-label fw-bold text-primary">Confirmar Alterações</label>
+                                <input type="password" name="currentPassword" class="form-control" placeholder="Sua senha" />
+                            </div>                                                   
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save me-2"></i>Atualizar Perfil
+                                </button>
+                                <a href="/user/info" class="btn btn-link text-secondary text-decoration-none">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
