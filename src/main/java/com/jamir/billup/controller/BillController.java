@@ -12,10 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jamir.billup.config.UserPrincipal;
 import com.jamir.billup.model.Bill;
+import com.jamir.billup.model.BillStatus;
 import com.jamir.billup.model.Client;
 import com.jamir.billup.repository.BillRepository;
 import com.jamir.billup.repository.ClientRepository;
@@ -38,19 +40,46 @@ public class BillController {
 		return mv;
 	}
 	@PostMapping("/bill/create")
-	public ResponseEntity<Map<String, String>> create(Bill bill, @AuthenticationPrincipal UserPrincipal user) {
+	public String create(Bill bill, @AuthenticationPrincipal UserPrincipal user) {
 		bill.setUser(user.getUser());
 		br.save(bill);
-		Map<String, String> res = new HashMap<String, String>();
-		res.put("msg", "Conta cadastrada com sucesso");
-		return ResponseEntity.ok(res);
+		return "redirect:/bill/list";
 	}
 	@GetMapping("/bill/list")
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam(name = "status", required = false) String status) {
 		ModelAndView mv = new ModelAndView();
-		List<Bill> bills = br.findAll();
 		mv.setViewName("bill/list");
+		List<Bill> bills = null;
+		
+		if(status != null) {
+			BillStatus statusKey = BillStatus.PAID;
+			switch (status) {
+			case "paid": {
+				statusKey = BillStatus.PAID;
+				break;
+			}
+			case "pending":{
+				statusKey = BillStatus.PENDING;
+				break;
+			}
+			case "overdue":{
+				statusKey = BillStatus.OVERDUE;
+				break;
+			}
+			default:
+				statusKey = BillStatus.PAID;
+				break;
+			}
+			bills = br.findByStatus(statusKey);			
+		}else {
+			bills = br.findAll();			
+		}		
 		mv.addObject("bills", bills);
+		Double totalBills = 0.00; 
+		for(Bill b : bills) {
+			totalBills += b.getTotalBill();
+		}
+		mv.addObject("totalBills", totalBills);
 		return mv;
 	}
 	@GetMapping("/bill/edit/{id}")
