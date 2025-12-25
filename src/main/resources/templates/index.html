@@ -1,10 +1,87 @@
-<html>
-	<head>
-		<title>BillUP</title>
-		<th:block th:replace="~{fragments/libs :: libs}"></th:block>
-	</head>
-	<body>
-		<a href="/login">Entrar</a>
-		<a href="/user/create">Criar conta</a>
-	</body>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BillUP - Gestão Inteligente de Cobranças</title>
+    <th:block th:replace="~{fragments/libs :: libs}"></th:block>
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a4da2 100%);
+            color: white;
+            padding: 100px 0;
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="/">BillUP</a>
+            <div class="d-flex">
+                <a href="/login" class="btn btn-outline-primary me-2">Entrar</a>
+                <a href="/user/create" class="btn btn-primary">Criar conta</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-3 fw-bold mb-4">Gerencie suas cobranças sem estresse</h1>
+            <p class="lead mb-5 px-md-5">
+                O <strong>BillUP</strong> é a solução completa para profissionais e empresas que buscam 
+                organização financeira. Cadastre clientes, controle débitos e nunca mais perca um prazo de vencimento.
+            </p>
+            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                <a href="/user/create" class="btn btn-light btn-lg px-4 gap-3 fw-bold">Começar Agora</a>
+                <a href="#funcionalidades" class="btn btn-outline-light btn-lg px-4">Saiba Mais</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="funcionalidades" class="py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Por que escolher o BillUP?</h2>
+                <p class="text-muted">Tudo o que você precisa para manter seu fluxo de caixa em dia.</p>
+            </div>
+            
+            <div class="row g-4 text-center">
+                <div class="col-md-4">
+                    <div class="p-4 card h-100 border-0 shadow-sm">
+                        <i class="bi bi-people-fill feature-icon"></i>
+                        <h4 class="fw-bold">Gestão de Clientes</h4>
+                        <p class="text-muted">Mantenha uma base de dados organizada com histórico de contatos e documentos.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-4 card h-100 border-0 shadow-sm">
+                        <i class="bi bi-calendar-check feature-icon"></i>
+                        <h4 class="fw-bold">Controle de Vencimentos</h4>
+                        <p class="text-muted">Visualize rapidamente quais débitos estão próximos do vencimento ou em atraso.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-4 card h-100 border-0 shadow-sm">
+                        <i class="bi bi-graph-up-arrow feature-icon"></i>
+                        <h4 class="fw-bold">Organização de Débitos</h4>
+                        <p class="text-muted">Vincule cobranças específicas a cada cliente e gerencie o status de cada pagamento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 BillUP - Gerenciamento de Cobranças. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+</body>
 </html>
